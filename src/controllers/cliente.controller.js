@@ -37,9 +37,3 @@ module.exports = {
   getAllClientes,
   deleteCliente,
 };
-
-/* insert into direccion  (direccion, direccion2, distrito, id_ciudad, codigo_postal , telefono)
-values ('Xalapa 1', '', 'Xalapa 11', 156, 11111, '3333333');
-SELECT LAST_INSERT_ID();
-
-SELECT * FROM direccion  WHERE id_direccion = ?lastId; */
