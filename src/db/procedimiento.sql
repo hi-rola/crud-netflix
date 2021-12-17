@@ -28,7 +28,7 @@ $$
 
 /* -----------------------------------------------------------------------------------*/
 
-CALL PROCEDURE('orienteee', '', 'Xalapa ver', 600, '91230', '2282690450', 1, 'Rolando', 'Alba', 'rool', 1, CURRENT_TIMESTAMP)
+CALL insertDireccionAndCliente('orienteee', '', 'Xalapa ver', 600, '91230', '2282690450', 1, 'Rolando', 'Alba', 'rool', 1, CURRENT_TIMESTAMP)
 
 /* ---------------------------------------------------------------------------------------- */
 INSERT INTO cliente (id_almacen , nombre, apellidos, email , id_direccion, activo , fecha_creacion)
@@ -37,3 +37,21 @@ VALUES (1, 'rolas', 'rolassss', 'rol@gmail.com', 47, 1, CURRENT_TIMESTAMP )
 insert into direccion  (direccion, direccion2, distrito, id_ciudad, codigo_postal , telefono)
 values ('Xalapa 1', '', 'Xalapa 11', 156, 11111, '3333333');
 SELECT LAST_INSERT_ID();
+
+/* ------------------------------------------------- */
+DELIMITER $$
+CREATE PROCEDURE getDireccionCliente(
+	IN _id_cliente SMALLINT
+)
+
+
+BEGIN 
+    select *
+    from direccion
+    where id_direccion =
+          (select id_direccion
+            from cliente 
+            where id_cliente = _id_cliente
+            );
+END 
+$$
