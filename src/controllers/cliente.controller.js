@@ -2,10 +2,10 @@ const db = require("../db/conexion-bd.js");
 
 const getAllClientes = async (req, res) => {
   try {
-    const result = await db.pool.query(
+    const reponse = await db.pool.query(
       "select * from cliente order by id_cliente desc"
     );
-    res.send(result);
+    res.send(reponse);
   } catch (err) {
     console.log(err.message);
     res.status(500).json({
@@ -18,11 +18,11 @@ const getAllClientes = async (req, res) => {
 const getClientesById = async (req, res) => {
   const { id } = req.params;
   try {
-    const result = await db.pool.query(
+    const reponse = await db.pool.query(
       "select * from cliente where id_cliente = ?",
       [id]
     );
-    res.send(result);
+    res.send(reponse);
   } catch (err) {
     res.status(500).json({
       message:
@@ -51,7 +51,7 @@ const createCliente = async (req, res) => {
   CALL insertDireccionAndCliente (?, ?, ?, ?, ?, ?, ?,  ?, ?, ?, ?, ?)
   `;
   try {
-    const result = await db.pool.query(query, [
+    const reponse = await db.pool.query(query, [
       direccion,
       direccion2,
       distrito,
@@ -77,10 +77,84 @@ const createCliente = async (req, res) => {
   }
 };
 
+const updateCliente = async (req, res) => {
+  const { id_almacen, nombre, apellidos, email, id_direccion, activo } =
+    req.body;
+
+  const { id } = req.params;
+
+  const query = `UPDATE cliente set id_almacen = ?,
+    nombre = ?,
+    apellidos = ?,
+    email = ?,
+    id_direccion= ?,
+    activo = ? WHERE id_cliente = ?`;
+  try {
+    const response = db.pool.query(query, [
+      id_almacen,
+      nombre,
+      apellidos,
+      email,
+      id_direccion,
+      activo,
+      id,
+    ]);
+
+    res.status(200).json({
+      message: "Información actualizada exitosamente",
+    });
+  } catch (err) {
+    res.status(500).json({
+      message:
+        "Problemas al procesar la solicitud. Por favor intentelo más tarde",
+    });
+  }
+};
+
+const updateDireccion = async (req, res) => {
+  const {
+    direccion,
+    direccion2,
+    distrito,
+    id_ciudad,
+    codigo_postal,
+    telefono,
+  } = req.body;
+
+  const { id } = req.params;
+
+  const query = `UPDATE direccion set direccion = ?,
+    direccion2 = ?,
+    distrito = ?,
+    id_ciudad = ?,
+    codigo_postal= ?,
+    telefono = ? WHERE id_direccion = ?`;
+  try {
+    const response = db.pool.query(query, [
+      direccion,
+      direccion2,
+      distrito,
+      id_ciudad,
+      codigo_postal,
+      telefono,
+      id,
+    ]);
+
+    res.status(200).json({
+      message: "Información actualizada exitosamente",
+    });
+  } catch (err) {
+    res.status(500).json({
+      message:
+        "Problemas al procesar la solicitud. Por favor intentelo más tarde",
+    });
+  }
+};
+
 const deleteCliente = async (req, res) => {
   try {
     const id_cliente = req.params.id;
-    const result = await db.pool.query(
+    const reponse = await db.pool.query(
       "delete from cliente where id_cliente = ?",
       [id_cliente]
     );
@@ -103,8 +177,8 @@ const getDireccionCliente = async (req, res) => {
   `;
 
   try {
-    const result = await db.pool.query(query, [id]);
-    res.send(result[0]);
+    const reponse = await db.pool.query(query, [id]);
+    res.send(reponse[0]);
   } catch (err) {
     console.log(err);
     res.status(500).json({
@@ -120,4 +194,6 @@ module.exports = {
   createCliente,
   getDireccionCliente,
   getClientesById,
+  updateCliente,
+  updateDireccion,
 };

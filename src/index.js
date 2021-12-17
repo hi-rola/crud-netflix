@@ -9,7 +9,8 @@ app.use(express.json());
 
 //rutas
 app.use("/api", require("./routes/cliente.route"));
+app.use("/api", require("./routes/pelicula.route"));
 
 app.listen(app.get("port"), () => {
-  console.log("server inicio");
+  console.log("Servidor iniciado");
 });

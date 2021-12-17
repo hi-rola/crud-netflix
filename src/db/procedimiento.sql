@@ -1,3 +1,5 @@
+/* Las tablas de Alquiler, Cliente, Inventario y Película */
+
 DELIMITER $$
 CREATE PROCEDURE insertDireccionAndCliente(
 	IN _direccion VARCHAR(50),
@@ -55,3 +57,5 @@ BEGIN
             );
 END 
 $$
+
+/* -------------------------------------------------------------- */
