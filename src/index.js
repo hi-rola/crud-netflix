@@ -10,6 +10,7 @@ app.use(express.json());
 //rutas
 app.use("/api", require("./routes/cliente.route"));
 app.use("/api", require("./routes/pelicula.route"));
+app.use("/api", require("./routes/consultas.route"));
 
 app.listen(app.get("port"), () => {
   console.log("Servidor iniciado");

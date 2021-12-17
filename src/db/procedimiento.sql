@@ -40,6 +40,10 @@ insert into direccion  (direccion, direccion2, distrito, id_ciudad, codigo_posta
 values ('Xalapa 1', '', 'Xalapa 11', 156, 11111, '3333333');
 SELECT LAST_INSERT_ID();
 
+INSERT INTO pelicula (titulo , descripcion, anyo_lanzamiento, id_idioma, duracion_alquiler, rental_rate, duracion, replacement_cost,
+                      clasificacion, caracteristicas_especiales)
+            VALUES ('poke', 'pelicula jajaj', 2021, 1, 5, '3.1', 120, '15.89', 'PG', 'Trailers, Commentaries');
+
 /* ------------------------------------------------- */
 DELIMITER $$
 CREATE PROCEDURE getDireccionCliente(
