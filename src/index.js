@@ -12,6 +12,7 @@ app.use("/api", require("./routes/cliente.route"));
 app.use("/api", require("./routes/pelicula.route"));
 app.use("/api", require("./routes/consultas.route"));
 app.use("/api", require("./routes/inventario.route"));
+app.use("/api", require("./routes/alquiler.route"));
 
 app.listen(app.get("port"), () => {
   console.log("Servidor iniciado");

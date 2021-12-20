@@ -62,4 +62,63 @@ BEGIN
 END 
 $$
 
+
 /* -------------------------------------------------------------- */
+--CREATE ALQUILER
+DELIMITER $$
+CREATE PROCEDURE insertAlquiler(
+	IN _id_pelicula SMALLINT,
+  IN _fecha_alquiler DATETIME,
+  IN _id_cliente SMALLINT,
+  IN _fecha_devolucion DATETIME,
+  IN _id_empleado TINYINT
+)
+
+
+BEGIN 
+  
+    SET @idPelicula = _id_pelicula;
+
+    SET @idInventario = (SELECT id_inventario from inventario where id_pelicula = @idPelicula limit 1);
+
+    INSERT INTO alquiler (fecha_alquiler, id_inventario, id_cliente, fecha_devolucion, id_empleado)
+    VALUES (_fecha_alquiler, @idInventario, _id_cliente, _fecha_devolucion, _id_empleado);
+    
+END 
+$$
+
+call insertAlquiler(999, '2021-12-20 12:42:13', 131, '2021-12-24 12:42:13', 2)
+
+/* -------------------------------------------------------------------------- */
+--UPDATE ALQUILER
+
+DELIMITER $$
+CREATE PROCEDURE updateAlquiler(
+	IN _id_pelicula SMALLINT,
+  IN _fecha_alquiler DATETIME,
+  IN _id_cliente SMALLINT,
+  IN _fecha_devolucion DATETIME,
+  IN _id_empleado TINYINT
+  IN _id_alquiler INT
+)
+
+
+BEGIN 
+  
+    SET @idPelicula = _id_pelicula;
+    SET @idAlquiler = _id_alquiler;
+
+    SET @idInventario = (SELECT id_inventario from inventario where id_pelicula = @idPelicula limit 1);
+
+    UPDATE alquiler set 
+          fecha_alquiler =  _fecha_alquiler, 
+          id_inventario = @idInventario,
+          id_cliente = _id_cliente, 
+          fecha_devolucion = _fecha_devolucion,
+          id_empleado = _id_empleado
+          WHERE id_alquiler = @idAlquiler;
+    
+END 
+$$
+
+call updateAlquiler(14, '2021-12-28 12:42:13', 300, '2021-12-30 12:42:13', 1, 16052);
