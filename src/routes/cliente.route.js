@@ -9,9 +9,11 @@ const {
   getClientesById,
   updateCliente,
   updateDireccion,
+  getClienteIdNombre,
 } = require("../controllers/cliente.controller");
 
 router.get("/cliente", getAllClientes);
+router.get("/cliente-idNom", getClienteIdNombre);
 router.get("/cliente/:id", getClientesById);
 router.get("/cliente-dir/:id", getDireccionCliente);
 router.put("/cliente-dir/:id", updateDireccion);

@@ -31,6 +31,20 @@ const getClientesById = async (req, res) => {
   }
 };
 
+const getClienteIdNombre = async (req, res) => {
+  try {
+    const reponse = await db.pool.query(
+      "select id_cliente, nombre, apellidos from cliente order by id_cliente desc limit 50"
+    );
+    res.send(reponse);
+  } catch (err) {
+    res.status(500).json({
+      message:
+        "Problemas al procesar la solicitud. Por favor intentelo más tarde.",
+    });
+  }
+};
+
 const createCliente = async (req, res) => {
   const {
     direccion,
@@ -196,4 +210,5 @@ module.exports = {
   getClientesById,
   updateCliente,
   updateDireccion,
+  getClienteIdNombre,
 };
