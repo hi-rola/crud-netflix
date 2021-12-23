@@ -28,6 +28,53 @@ BEGIN
 END 
 $$
 
+/* ------------------------------------------- */
+
+DELIMITER $$
+CREATE PROCEDURE updateDireccionAndCliente(
+	IN _direccion VARCHAR(50),
+	IN _direccion2 VARCHAR(50),
+	IN _distrito VARCHAR(20),
+	IN _id_ciudad SMALLINT,
+	IN _codigo_postal VARCHAR(10),
+	IN _telefono VARCHAR(20),
+	IN _id_almacen SMALLINT, 
+  IN _nombre VARCHAR(45), 
+  IN _apellidos VARCHAR(45), 
+  IN _email VARCHAR(50), 
+  IN _activo BOOLEAN,
+  IN _fecha_creacion DATETIME,
+  IN _id_direccion SMALLINT,
+  IN _id_cliente SMALLINT
+)
+
+
+BEGIN 
+
+    UPDATE direccion set 
+                      direccion = _direccion, 
+                      direccion2 = _direccion2, 
+                      distrito = _distrito,  
+                      id_ciudad = _id_ciudad, 
+                      codigo_postal = _codigo_postal, 
+                      telefono = _telefono 
+                      WHERE id_direccion = _id_direccion;
+    
+    UPDATE cliente set 
+                    id_almacen = _id_almacen, 
+                    nombre = _nombre, 
+                    apellidos = _apellidos, 
+                    email = _email, 
+                    id_direccion = _id_direccion, 
+                    activo = _activo,
+                    fecha_creacion = _fecha_creacion
+                    WHERE id_cliente = _id_cliente;
+
+END 
+$$
+
+CALL updateDireccionAndCliente('orienteee', 'orietee2', 'Xalapa ver', 601, '912300', '8888888', 1, 'Rolandos', 'Albas', 'rool@gmail.com', 1,CURRENT_TIMESTAMP, 55, 606);
+
 /* -----------------------------------------------------------------------------------*/
 
 CALL insertDireccionAndCliente('orienteee', '', 'Xalapa ver', 600, '91230', '2282690450', 1, 'Rolando', 'Alba', 'rool', 1, CURRENT_TIMESTAMP)

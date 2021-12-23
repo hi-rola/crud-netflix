@@ -1,11 +1,20 @@
 const express = require("express");
+const cors = require("cors");
 const app = express();
 
 // configuracion
 app.set("port", 3000);
 
-//middleware
+//middlewares : se ejecuta antes de llegar a las rutas
 app.use(express.json());
+app.use(cors());
+
+// permite procesar datos enviados desde formularios
+app.use(
+  express.urlencoded({
+    extended: false,
+  })
+);
 
 //rutas
 app.use("/api", require("./routes/cliente.route"));

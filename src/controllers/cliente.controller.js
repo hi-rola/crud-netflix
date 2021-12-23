@@ -22,7 +22,7 @@ const getClientesById = async (req, res) => {
       "select * from cliente where id_cliente = ?",
       [id]
     );
-    res.send(reponse);
+    res.send(reponse[0]);
   } catch (err) {
     res.status(500).json({
       message:
@@ -50,10 +50,10 @@ const createCliente = async (req, res) => {
     direccion,
     direccion2,
     distrito,
-    id_ciudad,
+    idCiudad,
     codigo_postal,
     telefono,
-    id_almacen,
+    idAlmacen,
     nombre,
     apellidos,
     email,
@@ -69,10 +69,10 @@ const createCliente = async (req, res) => {
       direccion,
       direccion2,
       distrito,
-      id_ciudad,
+      idCiudad,
       codigo_postal,
       telefono,
-      id_almacen,
+      idAlmacen,
       nombre,
       apellidos,
       email,
@@ -91,26 +91,41 @@ const createCliente = async (req, res) => {
   }
 };
 
-const updateCliente = async (req, res) => {
-  const { id_almacen, nombre, apellidos, email, id_direccion, activo } =
-    req.body;
-
+const updateClienteDireccion = async (req, res) => {
   const { id } = req.params;
 
-  const query = `UPDATE cliente set id_almacen = ?,
-    nombre = ?,
-    apellidos = ?,
-    email = ?,
-    id_direccion= ?,
-    activo = ? WHERE id_cliente = ?`;
+  const {
+    direccion,
+    direccion2,
+    distrito,
+    idCiudad,
+    codigo_postal,
+    telefono,
+    idAlmacen,
+    nombre,
+    apellidos,
+    email,
+    activo,
+    fecha_creacion,
+    id_direccion,
+  } = req.body;
+
+  const query = `CALL updateDireccionAndCliente (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) `;
   try {
     const response = db.pool.query(query, [
-      id_almacen,
+      direccion,
+      direccion2,
+      distrito,
+      idCiudad,
+      codigo_postal,
+      telefono,
+      idAlmacen,
       nombre,
       apellidos,
       email,
-      id_direccion,
       activo,
+      fecha_creacion,
+      id_direccion,
       id,
     ]);
 
@@ -208,7 +223,7 @@ module.exports = {
   createCliente,
   getDireccionCliente,
   getClientesById,
-  updateCliente,
+  updateClienteDireccion,
   updateDireccion,
   getClienteIdNombre,
 };
