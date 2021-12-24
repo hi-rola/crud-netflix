@@ -34,7 +34,7 @@ const getClientesById = async (req, res) => {
 const getClienteIdNombre = async (req, res) => {
   try {
     const reponse = await db.pool.query(
-      "select id_cliente, nombre, apellidos from cliente order by id_cliente desc limit 50"
+      "select id_cliente, nombre, apellidos from cliente order by id_cliente desc"
     );
     res.send(reponse);
   } catch (err) {

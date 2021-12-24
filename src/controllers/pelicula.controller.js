@@ -2,7 +2,9 @@ const db = require("../db/conexion-bd.js");
 
 const getAllPeliculas = async (req, res) => {
   try {
-    const result = await db.pool.query("select * from pelicula");
+    const result = await db.pool.query(
+      "select * from pelicula order by id_pelicula desc"
+    );
     res.send(result);
   } catch (err) {
     res.status(500).json({
@@ -18,6 +20,20 @@ const getPeliculaById = async (req, res) => {
     const result = await db.pool.query(
       "select * from pelicula where id_pelicula = ?",
       [id]
+    );
+    res.send(result[0]);
+  } catch (err) {
+    res.status(500).json({
+      message:
+        "Problemas al procesar la solicitud. Por favor intentelo más tarde.",
+    });
+  }
+};
+
+const getPeliculaByIdNombre = async (req, res) => {
+  try {
+    const result = await db.pool.query(
+      "select id_pelicula, titulo from pelicula order by id_pelicula desc"
     );
     res.send(result);
   } catch (err) {
@@ -145,6 +161,7 @@ const deletePelicula = async (req, res) => {
       message: "Película eliminado exitosamente.",
     });
   } catch (err) {
+    console.log(err);
     res.status(500).json({
       message:
         "Problemas al procesar la solicitud. Por favor intentelo más tarde.",
@@ -158,4 +175,5 @@ module.exports = {
   createPelicula,
   updatePelicula,
   deletePelicula,
+  getPeliculaByIdNombre,
 };

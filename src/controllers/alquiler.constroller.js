@@ -3,7 +3,7 @@ const db = require("../db/conexion-bd.js");
 const getAllAlquiler = async (req, res) => {
   try {
     const reponse = await db.pool.query(
-      "select * from alquiler order by id_alquiler desc limit 100"
+      "select * from alquiler order by id_alquiler desc"
     );
     res.send(reponse);
   } catch (err) {
@@ -22,7 +22,7 @@ const getAllAlquilerById = async (req, res) => {
       "select * from alquiler where id_alquiler = ?",
       [id]
     );
-    res.send(reponse);
+    res.send(reponse[0]);
   } catch (err) {
     console.log(err.message);
     res.status(500).json({
@@ -56,6 +56,7 @@ const createAlquiler = async (req, res) => {
       message: "Alquiler registrado exitosamente",
     });
   } catch (err) {
+    console.log(err);
     res.status(500).json({
       message:
         "Problemas al procesar la solicitud. Por favor intentelo más tarde.",
